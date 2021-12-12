@@ -309,7 +309,7 @@
     alt="Angular Logo"
     src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="
   />
-  <span>Welcome</span>
+  <span appChangeText>Welcome</span>
     <div class="spacer"></div>
     <a aria-label="Angular on twitter" target="_blank" rel="noopener" href="https://twitter.com/angular" title="Twitter">
       <svg id="twitter-logo" height="24" data-name="Logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
@@ -451,6 +451,147 @@
       </svg>
     </a>
   </div>
+  <div>
+    <br>
+    <app-new-cmp></app-new-cmp>
+  </div>
+  <div>
+    Months:
+    <select (change)="changemonths($event)">
+      <option *ngFor="let i of months">{{i}}</option>
+    </select>
+  </div>
+  <div>
+    <p *ngIf="is_available; then true_condition else false_condition"></p>
+    <ng-template #true_condition><p>Dieu kien dung</p></ng-template>
+    <ng-template #false_condition><p>Dieu kien sai</p></ng-template>
+    <button (click)="myClickFunction($event)">Click me</button>
+    <p>{{"Xin chao" | uppercase}}</p>
+    <p>{{50 | percent}}</p>
+     <b> {{6589.23 | currency:"VND"}}</b><br/>
+     <b> {{6589.23 | currency:"VND":true}}</b>
+     <h1>Date pipe</h1>
+     <b>{{todaydate | date:'d/M/y'}}</b><br/>
+     <b>{{todaydate | date:'shortTime'}}</b>
+     <b>{{ 454.78787814 | number: '3.4-4' }}</b>
+     <div style = "width:40%;float:left;border:solid 1px black;">
+     <h1>Json Pipe</h1>
+     <b>{{ jsonval | json }}</b>
+     <h1>Percent Pipe</h1>
+     <b>{{00.54565 | percent}}</b>
+     <h1>Slice Pipe</h1>
+     <b>{{months | slice:2:6}}</b>
+     // 2 và 6 là vị trí bắt đầu và vị trí kết thúc
+     <br>
+     <b>Căn bậc hai của 25 là : {{25 | sqrt}}</b>
+     <div class="routers">
+       <p><a routerLink="new-cmp">Click here to display New compoennt</a></p>
+       <router-outlet></router-outlet> <br>
+       <h3>Dữ liệu todaydate ở App Component: {{todaydate1}}</h3>
+       <h3>Property service: {{propertyService}}</h3>
+     </div>
+
+  </div>
+  </div>
+  <div>
+    <div>
+       <h2>Dữ liệu lấy từ service</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>name</th>
+                    <th>username</th>
+                    <th>phone</th>
+                    <th>address</th>
+                    <th>company</th>
+                </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let user of results">
+                  <td>{{user.id}}</td>
+                  <td>{{user.name}}</td>
+                  <td>{{user.username}}</td>
+                  <td>{{user.phone}}</td>
+                  <td>
+                      <p>- Street: {{user.address.street}}</p>
+                      <p>- City: {{user.address.city}}</p>
+                      <p>- ZipCode: {{user.address.zipcode}}</p>
+                  </td>
+                  <td>
+                      <p>- Name: {{user.company.name}}</p>
+                      <p>- bs: {{user.company.bs}}</p>
+                      <p>- catchPhrase: {{user.company.catchPhrase}}</p>
+                  </td>
+              </tr>
+          </tbody>
+        </table>
+     </div>
+  </div>
+
+  <form #userlogin = "ngForm" (ngSubmit) = "onClickSubmit(userlogin.value)" >
+       <input type = "text" name = "username" placeholder = "username" ngModel>
+       <br/>
+       <input type = "password" name = "pwd" placeholder = "password" ngModel>
+       <br/>
+       <input type = "submit" value = "submit">
+  </form>
+
+  <div>
+      <form [formGroup]="formdata" (ngSubmit) = "onClickSubmit2(formdata.value)" >
+         <input type="text" class="fortextbox" name="username" placeholder="username"
+            formControlName="username">
+         <br/>
+
+         <input type="pwd" class="fortextbox" name="pwd"
+            placeholder="pwd" formControlName="pwd">
+         <br/>
+
+         <input type="submit" [disabled] = "!formdata.valid" class="forsubmit" value="Log In">
+      </form>
+   </div>
+   <p>
+      Bạn vừa nhập username : {{username}}
+   </p>
+
+    <mat-drawer-container class="example-container" autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="side">
+    <p>Auto-resizing sidenav</p>
+    <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
+    <button (click)="showFiller = !showFiller" mat-raised-button>
+      Toggle extra text
+    </button>
+  </mat-drawer>
+
+  <div class="example-sidenav-content">
+    <button type="button" mat-button (click)="drawer.toggle()">
+      Toggle sidenav
+    </button>
+  </div>
+
+</mat-drawer-container>
+
+<button type="button" [matMenuTriggerFor]="settingsMenu">Settings</button>
+<button type="button" disabled [matMenuTriggerFor]="settingsMenu">Disabled menu</button>
+
+<mat-menu #settingsMenu>
+  <menu mat-menu-item>Profile</menu>
+  <menu mat-menu-item>Account</menu>
+</mat-menu>
+
+   <div>
+      <button (click)="animate()">Click Me</button>
+      <div [@myanimation] = "state" class="rotate">
+         <img style="width: 340px; height: 82px" src="https://freetuts.net/public/logo/hoc-lap-trinh-online.png" width="100" height="100">
+      </div>
+   </div>
+
+   <div >
+      <mat-slider min="1" max="100" step="1" value="50"></mat-slider>
+  </div>
+
+
 
   <!-- Footer -->
   <footer>
